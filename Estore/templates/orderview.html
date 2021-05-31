@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content%}
+{% load cart %}
+{% load custom_filter %}
+<div class="container">
+    <h1>Order Items</h1>
+    <div class="rounded border p-4 m-4">
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Price </th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total </th>
+                    <th scope="col">Status </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in order_prods %}
+                <tr>
+                    <th scope="col">{{forloop.counter}}</th>
+                    <td scope="col"><img src="{{order.product.image.url}}" alt="images" height='50px' class='rounded-circle'>
+                    </td>
+                    <td scope="col">{{order.product.name}}</td>
+                    <td scope="col">{{order.date}}</td>
+                    <td scope="col">{{order.price|currency}}</td>
+                    <td scope="col">{{order.quantity}}</td>
+                    <td scope="col">{{order.price|multiply:order.quantity|currency}}</td>
+                    {% if order.completed %}
+                    <td scope="col"><small class='badge bg-success'>Completed</small></td>
+                    {% else %}
+                    <td scope="col"><small class='badge bg-warning text-dark'>Pending</small></td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+            </tbody>
+            <!-- <tfoot>
+                <tr>
+                    <th scope="col" colspan='5' class='text-center'>Total</th>
+                    <td scope="col">test12</td>
+                </tr>
+            </tfoot> -->
+        </table>
+    </div>
+
+
+</div>
+{%endblock%}
